@@ -3,10 +3,7 @@
 from flask import Flask, Response
 from posts import Posts
 
-
-
 app = Flask(__name__)
-
 
 
 @app.route("/", methods=["GET"])
@@ -24,13 +21,11 @@ def home():
     return urls
 
 
-
 @app.route("/topwords", methods=["GET"])
 def topwords():
     posts = Posts()
     topwords = posts.topwords()
     return Response(topwords, mimetype='application/json')
-
 
 
 @app.route("/popular/users", methods=["GET"])
@@ -40,13 +35,11 @@ def popular_users():
     return Response(popusers, mimetype='application/json')
 
 
-
 @app.route("/popular/mentions", methods=["GET"])
 def popular_mentions():
     posts = Posts()
     popmens = posts.popular_mentions()
     return Response(popmens, mimetype='application/json')
-
 
 
 @app.route("/hourly", methods=["GET"])
@@ -56,13 +49,11 @@ def hourly():
     return Response(hours, mimetype='application/json')
 
 
-
 @app.route("/bulk_insert", methods=["GET"])
 def bulk_insert():
     posts = Posts()
     bulk = posts.bulk_insert()
-    return  Response(bulk, mimetype='application/json')
-
+    return Response(bulk, mimetype='application/json')
 
 
 if __name__ == "__main__":

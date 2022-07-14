@@ -1,5 +1,9 @@
-import json, os, time, sys
+import json
+import os
+import sys
+import time
 from datetime import datetime
+
 from helper import most_common as mc
 from mongodb import Mongo as db
 
@@ -7,13 +11,12 @@ from mongodb import Mongo as db
 os.environ['TZ'] = 'Asia/Jakarta'
 time.tzset()
 
-class Posts(object):
 
+class Posts(object):
 
     def __init__(self):
         self._database = db.connect()
         self._collection = self._database['posts']
-
 
     def topwords(self):
         words = self._collection.find({}, {'text':1})
@@ -25,7 +28,6 @@ class Posts(object):
         all_words = " ".join(words_list).split()
         return mc(all_words)
 
-
     def popular_users(self):
         users = self._collection.find({}, {'fromuser':1})
 
@@ -34,7 +36,6 @@ class Posts(object):
             users_list.append(user['fromuser'])
 
         return mc(users_list)
-
 
     def popular_mentions(self):
         users = self._collection.find({}, {'mentions':1})
@@ -50,7 +51,6 @@ class Posts(object):
 
         return mc(users_list)
 
-
     def hourly(self):
         time = self._collection.find({}, {'createdat':1})
 
@@ -65,7 +65,6 @@ class Posts(object):
             hours[int(hour)] = [hour, hours[int(hour)][1] + 1]
 
         return json.dumps(dict(hours))
-
 
     def bulk_insert(self):
         try:

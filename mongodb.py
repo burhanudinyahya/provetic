@@ -1,4 +1,6 @@
-import pymongo, os
+import os
+import pymongo
+
 
 class Mongo:
 
